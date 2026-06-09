@@ -135,11 +135,30 @@ body {
 }
 
 .akk-doc-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
   background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-medium) 100%);
   color: #fff;
-  text-align: center;
   padding: 2.5rem 2rem;
   border-bottom: 4px solid var(--color-accent);
+}
+
+.akk-doc-header-text {
+  text-align: left;
+  min-width: 0;
+}
+
+.akk-doc-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.5rem 0.85rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .akk-doc-title {
