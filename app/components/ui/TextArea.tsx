@@ -11,7 +11,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <textarea
         ref={ref}
         rows={3}
-        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm resize-y"
+        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm resize-y disabled:bg-gray-100 disabled:text-gray-500"
         {...props}
       />
     </div>

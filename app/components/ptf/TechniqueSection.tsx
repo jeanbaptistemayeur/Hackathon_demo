@@ -1,14 +1,27 @@
 "use client";
 
+import { useWatch } from "react-hook-form";
 import { Field } from "../ui/Field";
 import { TextArea } from "../ui/TextArea";
+import { SelectField } from "../ui/SelectField";
 import { Section, SubSection } from "../ui/Section";
 import { RequirementsList } from "./RequirementsList";
 import { RisksList } from "./RisksList";
 import { StringList } from "./StringList";
+import { SkillsList } from "./SkillsList";
+import {
+  RISK_STATEMENT_OPTIONS,
+  REQUIREMENTS_STATEMENT_OPTIONS,
+} from "../../schemas/ptf-form.schema";
 import type { SectionFormProps } from "./sections";
 
 export function TechniqueSection({ register, control }: SectionFormProps) {
+  const riskStatement = useWatch({ control, name: "risks_statement" });
+  const requirementsStatement = useWatch({
+    control,
+    name: "requirements_statement",
+  });
+
   return (
     <Section id="technique" title="2 Proposition technique">
       <SubSection
@@ -29,27 +42,19 @@ export function TechniqueSection({ register, control }: SectionFormProps) {
         id="technique-organisation"
         title="2.2 Organisation du projet"
       >
-        <div className="grid grid-cols-3 gap-4 mb-4">
-          <Field label="Prénom candidat" {...register("candidate_firstName")} />
-          <Field label="Nom candidat" {...register("candidate_lastName")} />
+        <div className="grid grid-cols-2 gap-4 mb-4">
           <Field
-            label="Fonction candidat"
-            {...register("candidate_function")}
+            label="Prénom du chargé d'affaire"
+            {...register("client_manager_firstName")}
           />
-        </div>
-        <div className="grid grid-cols-3 gap-4">
           <Field
-            label="Chargé d'affaire client"
+            label="Nom du chargé d'affaire"
             {...register("client_manager_name")}
           />
-          <Field
-            label="Responsable équipe"
-            {...register("team_manager_name")}
-          />
-          <Field
-            label="Fonction responsable"
-            {...register("team_manager_function")}
-          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Prénom du BM" {...register("bm_firstName")} />
+          <Field label="Nom du BM" {...register("bm_name")} />
         </div>
       </SubSection>
 
@@ -78,22 +83,37 @@ export function TechniqueSection({ register, control }: SectionFormProps) {
       </SubSection>
 
       <SubSection id="technique-pilotage" title="2.5 Pilotage de la prestation">
-        <TextArea
-          label="Pilotage de la prestation"
-          {...register("service_monitoring")}
-        />
+        <Field label="Nom du consultant" {...register("service_monitoring")} />
       </SubSection>
 
       <SubSection id="technique-exigences" title="2.6 Réponse aux exigences">
-        <RequirementsList register={register} control={control} />
+        <SelectField
+          label="Formulation"
+          options={[...REQUIREMENTS_STATEMENT_OPTIONS]}
+          {...register("requirements_statement")}
+        />
+        {requirementsStatement === "exigences_exclues" && (
+          <div className="mt-4">
+            <RequirementsList register={register} control={control} />
+          </div>
+        )}
       </SubSection>
 
       <SubSection id="technique-risques" title="2.7 Principaux risques">
-        <RisksList register={register} control={control} />
+        <SelectField
+          label="Formulation"
+          options={[...RISK_STATEMENT_OPTIONS]}
+          {...register("risks_statement")}
+        />
+        {riskStatement === "risques_identifies" && (
+          <div className="mt-4">
+            <RisksList register={register} control={control} />
+          </div>
+        )}
       </SubSection>
 
       <SubSection id="technique-competences" title="2.8 Compétences">
-        <TextArea label="Compétences" {...register("skills_description")} />
+        <SkillsList register={register} control={control} />
       </SubSection>
     </Section>
   );
