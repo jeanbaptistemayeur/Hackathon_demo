@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { PTF_SECTIONS, type PtfNavItem } from "./ptf/sections";
 
 function NavLeaf({ item, depth }: { item: PtfNavItem; depth: number }) {
@@ -66,13 +66,13 @@ function NavDropdown({ item }: { item: PtfNavItem }) {
   );
 }
 
-export function SectionNav() {
+export function SectionNav({ footer }: { footer?: ReactNode }) {
   return (
-    <nav className="akk-card sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto p-4">
+    <nav className="akk-card sticky top-24 flex max-h-[calc(100vh-7rem)] flex-col p-4">
       <p className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.12em] text-accent-dark">
         Sommaire
       </p>
-      <ul className="space-y-1 text-xs">
+      <ul className="flex-1 space-y-1 overflow-y-auto text-xs">
         {PTF_SECTIONS.map((section) =>
           section.children && section.children.length > 0 ? (
             <NavDropdown key={section.id} item={section} />
@@ -81,6 +81,9 @@ export function SectionNav() {
           ),
         )}
       </ul>
+      {footer && (
+        <div className="mt-3 shrink-0 border-t border-line pt-3">{footer}</div>
+      )}
     </nav>
   );
 }

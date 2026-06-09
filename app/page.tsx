@@ -6,6 +6,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { UploadForm } from "./components/UploadForm";
 import { PtfForm } from "./components/PtfForm";
 import { SectionNav } from "./components/SectionNav";
+import { ExportButtons } from "./components/export/ExportButtons";
 import { ptfFormSchema, type PtfFormData } from "./schemas/ptf-form.schema";
 import type { AnalyzeSpecFormData } from "./schemas/analyze-spec.schema";
 
@@ -119,34 +120,45 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="flex-1 px-6 py-8">
-        <div className="mx-auto flex max-w-6xl gap-8">
-          <div className="min-w-0 flex-1 akk-fade">
-            <div className="akk-doc">
-              <header className="akk-doc-header">
-                <h1 className="akk-doc-title">
-                  Proposition Technique et Financière
-                </h1>
-                <p className="akk-doc-subtitle">
-                  {ptfForm.watch("client_name")?.trim() ||
-                    "Akkodis · Proposition commerciale"}
-                </p>
-              </header>
-              <div className="akk-doc-body">
-                <FormProvider {...ptfForm}>
+        <FormProvider {...ptfForm}>
+          <div className="mx-auto flex max-w-6xl gap-8">
+            <div className="min-w-0 flex-1 akk-fade">
+              <div className="akk-doc">
+                <header className="akk-doc-header">
+                  <div className="akk-doc-header-text">
+                    <h1 className="akk-doc-title">
+                      Proposition Technique et Financière
+                    </h1>
+                    <p className="akk-doc-subtitle">
+                      {ptfForm.watch("client_name")?.trim() ||
+                        "Akkodis · Proposition commerciale"}
+                    </p>
+                  </div>
+                  <span className="akk-doc-logo">
+                    <Image
+                      src="/akkodis-logo.png"
+                      alt="Akkodis"
+                      width={132}
+                      height={32}
+                      className="h-7 w-auto"
+                    />
+                  </span>
+                </header>
+                <div className="akk-doc-body">
                   <form>
                     <PtfForm
                       register={ptfForm.register}
                       control={ptfForm.control}
                     />
                   </form>
-                </FormProvider>
+                </div>
               </div>
             </div>
+            <aside className="hidden w-56 shrink-0 lg:block">
+              <SectionNav footer={<ExportButtons />} />
+            </aside>
           </div>
-          <aside className="hidden w-52 shrink-0 lg:block">
-            <SectionNav />
-          </aside>
-        </div>
+        </FormProvider>
       </main>
     </div>
   );
