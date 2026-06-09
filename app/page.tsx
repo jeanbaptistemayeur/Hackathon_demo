@@ -7,6 +7,7 @@ import { UploadForm } from "./components/UploadForm";
 import { PtfForm } from "./components/PtfForm";
 import { SectionNav } from "./components/SectionNav";
 import { ExportButtons } from "./components/export/ExportButtons";
+import { MissingFieldsPanel } from "./components/export/MissingFieldsPanel";
 import { ptfFormSchema, type PtfFormData } from "./schemas/ptf-form.schema";
 import type { AnalyzeSpecFormData } from "./schemas/analyze-spec.schema";
 
@@ -228,6 +229,7 @@ export default function Home() {
               <SectionNav
                 footer={
                   <div className="space-y-2">
+                    <MissingFieldsPanel />
                     <ExportButtons />
                     <button
                       type="button"
