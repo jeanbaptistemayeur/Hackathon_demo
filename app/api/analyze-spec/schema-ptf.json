@@ -193,6 +193,18 @@
     }
   },
   "profiles": {
+    "candidate_firstName": {
+      "type": "string",
+      "description": "First name of the candidate."
+    },
+    "candidate_lastName": {
+      "type": "string",
+      "description": "Last name of the candidate."
+    },
+    "candidate_function": {
+      "type": "string",
+      "description": "Job title or function of the candidate."
+    },
     "proposal_highlights": {
       "type": "array",
       "description": "Key strengths of the proposal (experience, expertise, capabilities)."

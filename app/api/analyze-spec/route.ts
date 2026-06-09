@@ -10,7 +10,7 @@ const openai = new OpenAI({
   defaultHeaders: { "api-key": process.env.OPENAI_API_KEY },
 });
 
-function buildPrompt(rawText: string, fileName: string): string {
+function buildPrompt(rawText: string, fileName: string, profileData?: Record<string, unknown>): string {
   type FieldDef = {
     type: string;
     description: string;
@@ -36,7 +36,12 @@ function buildPrompt(rawText: string, fileName: string): string {
   const specFields = formatFields(specs);
   const profileFields = formatFields(profiles);
 
-  return `You are a document analysis assistant. Extract structured information from the following specification document.
+  let profileSection = "";
+  if (profileData) {
+    profileSection = `\n---\nCANDIDATE PROFILE (JSON):\n${JSON.stringify(profileData, null, 2)}\n---\n`;
+  }
+
+  return `You are a document analysis assistant. Extract structured information from the following specification document and candidate profile.
 
 File name: ${fileName}
 
@@ -46,19 +51,19 @@ Return ONLY a valid JSON object with this structure:
   "profiles": { ... }
 }
 
-SPECIFICATIONS fields (extracted from the document):
+SPECIFICATIONS fields (extracted from the specification document):
 ${specFields}
 
-PROFILES fields (extracted from the document if candidate/team info is present):
+PROFILES fields (extracted from the candidate profile JSON):
 ${profileFields}
 
-If a field cannot be found in the document, set its value to null.
+If a field cannot be found in either source, set its value to null.
 
 ---
-DOCUMENT:
+SPECIFICATION DOCUMENT:
 ${rawText}
 ---
-
+${profileSection}
 Respond with ONLY the JSON object, no explanation, no markdown fences.`;
 }
 
@@ -72,6 +77,7 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData();
   const specFile = formData.get("specFile") as File | null;
+  const profileFile = formData.get("profileFile") as File | null;
 
   if (!specFile) {
     return NextResponse.json(
@@ -80,7 +86,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 1. Extract raw text
+  if (!profileFile) {
+    return NextResponse.json(
+      { error: "profileFile is required" },
+      { status: 400 },
+    );
+  }
+
+  // 1. Extract raw text from spec
   let rawText = "";
 
   if (specFile.name.endsWith(".docx")) {
@@ -101,12 +114,27 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 2. Call OpenAI to extract structured data
+  // 2. Parse profile JSON (optional)
+  let profileData: Record<string, unknown> | undefined;
+
+  if (profileFile) {
+    const profileContent = await profileFile.text();
+    try {
+      profileData = JSON.parse(profileContent);
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON in profile file" },
+        { status: 400 },
+      );
+    }
+  }
+
+  // 3. Call OpenAI to extract structured data
   const fileName = specFile.name.replace(/\.(docx|pdf)$/i, "");
   const completion = await openai.chat.completions.create({
     model: process.env.AKKODIS_DEPLOYMENT_NAME!,
     temperature: 0,
-    messages: [{ role: "user", content: buildPrompt(rawText, fileName) }],
+    messages: [{ role: "user", content: buildPrompt(rawText, fileName, profileData) }],
   });
 
   const content = completion.choices[0]?.message?.content ?? "";

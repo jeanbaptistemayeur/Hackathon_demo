@@ -1,0 +1,39 @@
+{
+  "candidate": {
+    "firstName": "Thomas",
+    "lastName": "Durand",
+    "email": "thomas.durand@akkodis.com",
+    "phone": "+33 6 12 34 56 78",
+    "function": "Ingénieur Calcul Éléments Finis",
+    "experience_years": 8,
+    "skills": [
+      "CATIA V5",
+      "ANSYS",
+      "Abaqus",
+      "Python",
+      "Calcul de structures"
+    ],
+    "certifications": [
+      "Habilitation Confidentiel Défense"
+    ],
+    "education": "Ingénieur ENSAM - Spécialité Mécanique des Structures",
+    "availability_date": "01/07/2026",
+    "daily_rate": 650
+  },
+  "proposal_highlights": [
+    "8 ans d'expérience en calcul de structures aéronautiques",
+    "Maîtrise des outils CATIA V5 et ANSYS certifiée",
+    "Expérience Safran : 3 missions précédentes (Safran Aircraft Engines, Safran Landing Systems)",
+    "Habilité Confidentiel Défense",
+    "Proximité géographique avec le site client"
+  ],
+  "client_manager_name": "Sophie Martin",
+  "client_manager_function": "Chargée d'Affaires Aéronautique",
+  "team_manager_name": "Pierre Lefèvre",
+  "team_manager_function": "Responsable Technique - Pôle Calcul",
+  "external_subcontractors": [],
+  "pricing": {
+    "daily_rate": 650,
+    "contract_type": "Régie"
+  }
+}
