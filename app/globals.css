@@ -1,26 +1,244 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =============================================================
+   Akkodis — Charte graphique (tokens de design)
+   Source: chartes/styles/_brand.scss
+   ============================================================= */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Couleurs de marque -> génèrent les utilitaires bg-/text-/border- */
+  --color-brand: #1e3a5f;
+  --color-brand-dark: #15293f;
+  --color-brand-medium: #2c5282;
+  --color-brand-light: #4a6fa5;
+  --color-accent: #fdb913;
+  --color-accent-light: #ffc93c;
+  --color-accent-dark: #e5a511;
+
+  --color-ink: #1a202c;
+  --color-muted: #5a6b82;
+  --color-line: #dce5f2;
+
+  --color-success: #2f855a;
+  --color-warning: #c05621;
+  --color-error: #c53030;
+  --color-info: #2b6cb0;
+
+  --color-surface: #ffffff;
+  --color-canvas: #eef2f8;
+
+  /* Typographie */
+  --font-sans: var(--font-roboto), "Helvetica Neue", Arial, sans-serif;
+
+  /* Ombres */
+  --shadow-brand-sm: 0 1px 3px rgba(30, 58, 95, 0.08);
+  --shadow-brand-md: 0 8px 24px rgba(30, 58, 95, 0.1);
+  --shadow-brand-lg: 0 24px 60px rgba(30, 58, 95, 0.18);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #eef2f8;
+  --foreground: #1a202c;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 12% -5%, rgba(74, 111, 165, 0.16) 0, transparent 42%),
+    radial-gradient(circle at 95% 0%, rgba(253, 185, 19, 0.14) 0, transparent 34%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Barre de défilement discrète et raccord avec la marque */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c2d2ea transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #c2d2ea;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #a9bfdf;
+  background-clip: padding-box;
+}
+
+/* Champs de formulaire — style harmonisé pour le projet */
+.akk-input {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  background: #fff;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+.akk-input::placeholder {
+  color: #9aabc2;
+}
+.akk-input:hover {
+  border-color: #c3d3ea;
+}
+.akk-input:focus {
+  outline: none;
+  border-color: var(--color-brand-medium);
+  box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.16);
+}
+.akk-input:disabled {
+  background: #f4f7fb;
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.akk-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+  margin-bottom: 0.3rem;
+}
+
+/* Carte de section */
+.akk-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-brand-sm);
+}
+
+/* =============================================================
+   Aper\u00e7u type \u00ab document \u00bb (PTF) — inspir\u00e9 du mod\u00e8le fourni
+   ============================================================= */
+.akk-doc {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-brand-md);
+  overflow: hidden;
+}
+
+.akk-doc-header {
+  background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-medium) 100%);
+  color: #fff;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-bottom: 4px solid var(--color-accent);
+}
+
+.akk-doc-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.akk-doc-subtitle {
+  margin: 0.5rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 300;
+  opacity: 0.92;
+}
+
+.akk-doc-body {
+  padding: 2rem 2.25rem 2.5rem;
+}
+
+/* Section de document (le num\u00e9ro est d\u00e9j\u00e0 dans le titre) */
+.akk-doc-section {
+  margin-top: 2.75rem;
+}
+.akk-doc-section:first-child {
+  margin-top: 0;
+}
+
+.akk-doc-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-brand);
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 3px solid var(--color-brand-medium);
+}
+
+.akk-doc-subsection {
+  margin-top: 1.75rem;
+}
+
+.akk-doc-subsection-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-brand-medium);
+  margin: 0 0 0.85rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--color-accent);
+}
+
+/* Apparition douce */
+@keyframes akk-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.akk-pop {
+  animation: akk-pop 200ms ease-out;
+}
+
+@keyframes akk-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.akk-fade {
+  animation: akk-fade 160ms ease-out;
+}
+
+/* Spinner de chargement — dégradé charte Akkodis (slide 2 PPTX)
+   Dark Blue #001F33 · Electric Blue #00FFFF · Yellow #FFB81C */
+.akk-spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: conic-gradient(
+    from 0deg,
+    #001f33 0%,
+    #00ffff 40%,
+    #ffb81c 75%,
+    #001f33 100%
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    #000 calc(100% - 4px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 5px),
+    #000 calc(100% - 4px)
+  );
 }

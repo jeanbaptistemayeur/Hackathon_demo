@@ -6,12 +6,12 @@ interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
-  ({ label, options, ...props }, ref) => (
+  ({ label, options, className, ...props }, ref) => (
     <div>
-      <label className="block text-xs text-gray-500 mb-1">{label}</label>
+      <label className="akk-label">{label}</label>
       <select
         ref={ref}
-        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
+        className={`akk-input cursor-pointer ${className ?? ""}`}
         {...props}
       >
         {options.map((option) => (

@@ -10,14 +10,14 @@ function NavLeaf({ item, depth }: { item: PtfNavItem; depth: number }) {
         href={`#${item.id}`}
         className={
           depth === 0
-            ? "block font-medium text-gray-700 hover:text-gray-900 transition-colors"
-            : "block text-gray-500 hover:text-gray-900 transition-colors"
+            ? "block rounded-md px-2 py-1 font-semibold text-brand transition-colors hover:bg-brand/5"
+            : "block rounded-md px-2 py-1 text-muted transition-colors hover:bg-brand/5 hover:text-brand"
         }
       >
         {item.label}
       </a>
       {item.children && item.children.length > 0 && (
-        <ul className="mt-1 ml-3 space-y-1 border-l border-gray-200 pl-3">
+        <ul className="mt-1 ml-3 space-y-1 border-l border-line pl-3">
           {item.children.map((child) => (
             <NavLeaf key={child.id} item={child} depth={depth + 1} />
           ))}
@@ -35,7 +35,7 @@ function NavDropdown({ item }: { item: PtfNavItem }) {
       <div className="flex items-center justify-between gap-2">
         <a
           href={`#${item.id}`}
-          className="block font-medium text-gray-700 hover:text-gray-900 transition-colors"
+          className="block flex-1 rounded-md px-2 py-1 font-semibold text-brand transition-colors hover:bg-brand/5"
         >
           {item.label}
         </a>
@@ -44,7 +44,7 @@ function NavDropdown({ item }: { item: PtfNavItem }) {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Réduire" : "Développer"}
-          className="text-gray-400 hover:text-gray-700 transition-colors shrink-0"
+          className="shrink-0 text-muted transition-colors hover:text-brand"
         >
           <span
             className={`inline-block transition-transform ${
@@ -56,7 +56,7 @@ function NavDropdown({ item }: { item: PtfNavItem }) {
         </button>
       </div>
       {open && item.children && (
-        <ul className="mt-1 ml-3 space-y-1 border-l border-gray-200 pl-3">
+        <ul className="mt-1 ml-3 space-y-1 border-l border-line pl-3">
           {item.children.map((child) => (
             <NavLeaf key={child.id} item={child} depth={1} />
           ))}
@@ -68,8 +68,11 @@ function NavDropdown({ item }: { item: PtfNavItem }) {
 
 export function SectionNav() {
   return (
-    <nav className="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
-      <ul className="space-y-2 text-xs">
+    <nav className="akk-card sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto p-4">
+      <p className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.12em] text-accent-dark">
+        Sommaire
+      </p>
+      <ul className="space-y-1 text-xs">
         {PTF_SECTIONS.map((section) =>
           section.children && section.children.length > 0 ? (
             <NavDropdown key={section.id} item={section} />
