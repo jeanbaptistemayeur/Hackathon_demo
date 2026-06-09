@@ -8,12 +8,13 @@ import { generatePtfPdf } from "../../lib/pdf-export";
 import { downloadBlob, ptfFileBase } from "../../lib/ptf-content";
 
 type Busy = null | "pdf" | "docx";
+type Kind = "pdf" | "docx";
 
 export function ExportButtons() {
   const { getValues } = useFormContext<PtfFormData>();
   const [busy, setBusy] = useState<Busy>(null);
 
-  const run = async (kind: "pdf" | "docx") => {
+  const run = async (kind: Kind) => {
     if (busy) return;
     setBusy(kind);
     try {
