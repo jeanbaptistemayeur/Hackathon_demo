@@ -3,8 +3,10 @@
 import { Field } from "../ui/Field";
 import { TextArea } from "../ui/TextArea";
 import { Checkbox } from "../ui/Checkbox";
+import { SelectField } from "../ui/SelectField";
 import { Section, SubSection } from "../ui/Section";
 import { StringList } from "./StringList";
+import { LOGISTICS_PROVIDER_OPTIONS } from "../../schemas/ptf-form.schema";
 import type { SectionFormProps } from "./sections";
 
 export function EnjeuxSection({ register, control }: SectionFormProps) {
@@ -54,7 +56,14 @@ export function EnjeuxSection({ register, control }: SectionFormProps) {
       </SubSection>
 
       <SubSection id="enjeux-logistique" title="1.5 Moyens logistiques">
-        <Field label="Moyens logistiques" {...register("logistics_provider")} />
+        <SelectField
+          label="Moyens logistiques"
+          options={[
+            { value: "", label: "— Sélectionner —" },
+            ...LOGISTICS_PROVIDER_OPTIONS,
+          ]}
+          {...register("logistics_provider")}
+        />
       </SubSection>
 
       <SubSection id="enjeux-prevention" title="1.6 Prévention">
@@ -91,7 +100,12 @@ export function EnjeuxSection({ register, control }: SectionFormProps) {
       </SubSection>
 
       <SubSection id="enjeux-ia" title="1.9 Intelligence Artificielle">
-        <TextArea label="Utilisation d'IA" {...register("ai_usage")} />
+        <TextArea
+          label="Utilisation d'IA"
+          rows={6}
+          disabled
+          {...register("ai_usage")}
+        />
       </SubSection>
 
       <SubSection id="enjeux-environnement" title="1.10 ENVIRONNEMENT">

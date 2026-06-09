@@ -60,10 +60,12 @@ export default function Home() {
         specifications: Record<string, unknown>;
         profiles: Record<string, unknown>;
       };
+      const defaults = ptfFormSchema.parse({});
       ptfForm.reset({
-        ...ptfFormSchema.parse({}),
+        ...defaults,
         ...specifications,
         ...profiles,
+        ai_usage: defaults.ai_usage,
       });
     }
 

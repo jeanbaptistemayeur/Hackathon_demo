@@ -1,7 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from "react";
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
 }
 
 export const Field = forwardRef<HTMLInputElement, FieldProps>(

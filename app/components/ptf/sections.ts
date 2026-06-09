@@ -79,18 +79,6 @@ export const PTF_SECTIONS: PtfNavItem[] = [
       { id: "financiere-prix", label: "3.1 Prix" },
       { id: "financiere-frais", label: "3.2 Frais" },
       { id: "financiere-facturation", label: "3.3 Facturation" },
-      { id: "financiere-calendrier", label: "3.4 Calendrier de paiement" },
-      { id: "financiere-commandes", label: "3.5 Gestion des commandes" },
-      { id: "financiere-cgv", label: "3.6 CGV" },
-      {
-        id: "financiere-revision",
-        label: "3.7 Révision des taux journaliers et des tarifs",
-      },
-      { id: "financiere-signature", label: "3.8 Signature" },
-      {
-        id: "financiere-annexe-env",
-        label: "Annexe 1 · Politique environnement",
-      },
     ],
   },
 ];
