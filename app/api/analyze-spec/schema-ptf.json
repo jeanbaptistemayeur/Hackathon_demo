@@ -17,6 +17,10 @@
       "description": "Reference number of the client specification document (Cahier des Charges).",
       "rule": "Extract the document reference then append '-' followed by the uploaded file name (without extension). Example: '4CDC1202-NomDuFichier'. If the ref is already in the file name, just use the file name without extension."
     },
+    "document_nature": {
+      "type": "string",
+      "description": "Nature of the document: 'Proposition technique', 'Proposition financière', or 'Proposition technique et financière'."
+    },
     "offer_reference": {
       "type": "string",
       "description": "Akkodis offer reference number (format O-XXXXXX-Y)."
@@ -44,6 +48,14 @@
     "akkodis_entity": {
       "type": "string",
       "description": "Akkodis legal entity name used for invoicing."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency used for invoicing (e.g. EUR, USD)."
+    },
+    "framework_contract": {
+      "type": "string",
+      "description": "Framework contract (Contrat Cadre) applicable to the mission, if any."
     },
     "client_contacts": {
       "type": "array",
