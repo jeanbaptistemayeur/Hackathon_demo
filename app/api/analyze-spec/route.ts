@@ -10,7 +10,11 @@ const openai = new OpenAI({
   defaultHeaders: { "api-key": process.env.OPENAI_API_KEY },
 });
 
-function buildPrompt(rawText: string, fileName: string, profileData?: Record<string, unknown>): string {
+function buildPrompt(
+  rawText: string,
+  fileName: string,
+  profileData?: Record<string, unknown>,
+): string {
   type FieldDef = {
     type: string;
     description: string;
@@ -134,7 +138,9 @@ export async function POST(request: NextRequest) {
   const completion = await openai.chat.completions.create({
     model: process.env.AKKODIS_DEPLOYMENT_NAME!,
     temperature: 0,
-    messages: [{ role: "user", content: buildPrompt(rawText, fileName, profileData) }],
+    messages: [
+      { role: "user", content: buildPrompt(rawText, fileName, profileData) },
+    ],
   });
 
   const content = completion.choices[0]?.message?.content ?? "";

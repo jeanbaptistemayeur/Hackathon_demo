@@ -6,16 +6,8 @@
     "phone": "+33 6 12 34 56 78",
     "function": "Ingénieur Calcul Éléments Finis",
     "experience_years": 8,
-    "skills": [
-      "CATIA V5",
-      "ANSYS",
-      "Abaqus",
-      "Python",
-      "Calcul de structures"
-    ],
-    "certifications": [
-      "Habilitation Confidentiel Défense"
-    ],
+    "skills": ["CATIA V5", "ANSYS", "Abaqus", "Python", "Calcul de structures"],
+    "certifications": ["Habilitation Confidentiel Défense"],
     "education": "Ingénieur ENSAM - Spécialité Mécanique des Structures",
     "availability_date": "01/07/2026",
     "daily_rate": 650
