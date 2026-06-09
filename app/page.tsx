@@ -77,7 +77,7 @@ export default function Home() {
         <AppHeader />
         <div className="flex flex-1 items-center justify-center">
           <div className="space-y-5 text-center akk-fade">
-            <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-brand/20 border-t-accent" />
+            <div className="mx-auto animate-spin akk-spinner" />
             <p className="text-sm font-medium text-muted">
               Analyse du document en cours…
             </p>
@@ -119,19 +119,27 @@ export default function Home() {
       <main className="flex-1 px-6 py-8">
         <div className="mx-auto flex max-w-6xl gap-8">
           <div className="min-w-0 flex-1 akk-fade">
-            <div className="mb-8 space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">
-                Proposition
-              </p>
-              <h1 className="text-2xl font-black tracking-tight text-brand">
-                Proposition Technique et Financière
-              </h1>
+            <div className="akk-doc">
+              <header className="akk-doc-header">
+                <h1 className="akk-doc-title">
+                  Proposition Technique et Financière
+                </h1>
+                <p className="akk-doc-subtitle">
+                  {ptfForm.watch("client_name")?.trim() ||
+                    "Akkodis · Proposition commerciale"}
+                </p>
+              </header>
+              <div className="akk-doc-body">
+                <FormProvider {...ptfForm}>
+                  <form>
+                    <PtfForm
+                      register={ptfForm.register}
+                      control={ptfForm.control}
+                    />
+                  </form>
+                </FormProvider>
+              </div>
             </div>
-            <FormProvider {...ptfForm}>
-              <form className="space-y-8">
-                <PtfForm register={ptfForm.register} control={ptfForm.control} />
-              </form>
-            </FormProvider>
           </div>
           <aside className="hidden w-52 shrink-0 lg:block">
             <SectionNav />

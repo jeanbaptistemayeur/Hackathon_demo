@@ -36,8 +36,14 @@ export function PricingLotsList({ register, control }: SectionFormProps) {
     const productionDays = round2(result.billableDays);
     const lotPrice = round2(result.tjm * result.billableDays);
 
+    const candidateName = `${input.firstName} ${input.lastName}`.trim();
+    const projectTitle = getValues("project_title")?.trim();
+    const lotName = candidateName
+      ? projectTitle || candidateName
+      : "Lot calculé";
+
     append({
-      lot_name: `${input.firstName} ${input.lastName}`.trim() || "Lot calculé",
+      lot_name: lotName,
       description: "",
       nf_code: input.serviceCode || "",
       daily_rate: dailyRate,

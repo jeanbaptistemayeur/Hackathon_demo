@@ -6,11 +6,8 @@ interface SectionProps {
 
 export function Section({ id, title, children }: SectionProps) {
   return (
-    <section id={id} className="akk-card scroll-mt-24 p-6 akk-fade">
-      <h2 className="mb-5 flex items-center gap-3 text-lg font-bold text-brand">
-        <span className="h-5 w-1.5 rounded-full bg-accent" />
-        {title}
-      </h2>
+    <section id={id} className="akk-doc-section scroll-mt-24">
+      <h2 className="akk-doc-section-title">{title}</h2>
       {children}
     </section>
   );
@@ -24,10 +21,8 @@ interface SubSectionProps {
 
 export function SubSection({ id, title, children }: SubSectionProps) {
   return (
-    <section id={id} className="mt-8 scroll-mt-24 first:mt-0">
-      <h3 className="mb-3 border-b border-line pb-2 text-sm font-bold text-brand-medium">
-        {title}
-      </h3>
+    <section id={id} className="akk-doc-subsection scroll-mt-24">
+      <h3 className="akk-doc-subsection-title">{title}</h3>
       {children}
     </section>
   );
