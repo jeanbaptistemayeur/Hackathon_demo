@@ -5,11 +5,16 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ label, ...props }, ref) => (
-    <div className="flex items-center gap-2">
-      <input ref={ref} type="checkbox" className="rounded" {...props} />
-      <label className="text-xs text-gray-500">{label}</label>
-    </div>
+  ({ label, className, ...props }, ref) => (
+    <label className="flex cursor-pointer items-center gap-2">
+      <input
+        ref={ref}
+        type="checkbox"
+        className={`h-4 w-4 rounded border-line text-brand accent-brand ${className ?? ""}`}
+        {...props}
+      />
+      <span className="text-xs font-medium text-muted">{label}</span>
+    </label>
   ),
 );
 Checkbox.displayName = "Checkbox";

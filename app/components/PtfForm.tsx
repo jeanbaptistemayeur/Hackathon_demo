@@ -11,7 +11,7 @@ export { PTF_SECTIONS } from "./ptf/sections";
 
 export function PtfForm({ register, control }: SectionFormProps) {
   return (
-    <div className="space-y-12">
+    <div className="space-y-6">
       <DescriptionSection register={register} control={control} />
       <VersionsSection register={register} control={control} />
       <EnjeuxSection register={register} control={control} />

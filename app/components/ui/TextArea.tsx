@@ -5,13 +5,13 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ label, ...props }, ref) => (
+  ({ label, className, ...props }, ref) => (
     <div className="mb-4">
-      <label className="block text-xs text-gray-500 mb-1">{label}</label>
+      <label className="akk-label">{label}</label>
       <textarea
         ref={ref}
         rows={3}
-        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm resize-y"
+        className={`akk-input resize-y ${className ?? ""}`}
         {...props}
       />
     </div>

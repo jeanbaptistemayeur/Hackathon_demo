@@ -5,14 +5,10 @@ interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Field = forwardRef<HTMLInputElement, FieldProps>(
-  ({ label, ...props }, ref) => (
+  ({ label, className, ...props }, ref) => (
     <div>
-      <label className="block text-xs text-gray-500 mb-1">{label}</label>
-      <input
-        ref={ref}
-        className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
-        {...props}
-      />
+      <label className="akk-label">{label}</label>
+      <input ref={ref} className={`akk-input ${className ?? ""}`} {...props} />
     </div>
   ),
 );
