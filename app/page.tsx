@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useForm, FormProvider } from "react-hook-form";
 import { UploadForm } from "./components/UploadForm";
@@ -9,6 +9,8 @@ import { SectionNav } from "./components/SectionNav";
 import { ExportButtons } from "./components/export/ExportButtons";
 import { ptfFormSchema, type PtfFormData } from "./schemas/ptf-form.schema";
 import type { AnalyzeSpecFormData } from "./schemas/analyze-spec.schema";
+
+const STORAGE_KEY = "akk-ptf-state-v1";
 
 function AppHeader() {
   return (
@@ -39,10 +41,67 @@ function AppHeader() {
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [analyzed, setAnalyzed] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   const ptfForm = useForm<PtfFormData>({
     defaultValues: ptfFormSchema.parse({}),
   });
+
+  // Restaure l'état sauvegardé au chargement (persistance F5).
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as {
+          analyzed?: boolean;
+          data?: Partial<PtfFormData>;
+        };
+        if (saved.analyzed && saved.data) {
+          ptfForm.reset({ ...ptfFormSchema.parse({}), ...saved.data });
+          setAnalyzed(true);
+        }
+      }
+    } catch {
+      // Données corrompues : on ignore et on repart de zéro.
+    }
+    setHydrated(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sauvegarde à chaque modification une fois la proposition affichée.
+  useEffect(() => {
+    if (!hydrated || !analyzed) return;
+    const subscription = ptfForm.watch((values) => {
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ analyzed: true, data: values }),
+        );
+      } catch {
+        // Quota dépassé ou stockage indisponible : on ignore.
+      }
+    });
+    // Sauvegarde immédiate de l'état courant.
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ analyzed: true, data: ptfForm.getValues() }),
+      );
+    } catch {
+      // ignore
+    }
+    return () => subscription.unsubscribe();
+  }, [hydrated, analyzed, ptfForm]);
+
+  const handleReset = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    ptfForm.reset(ptfFormSchema.parse({}));
+    setAnalyzed(false);
+  };
 
   const handleUpload = async (data: AnalyzeSpecFormData) => {
     setLoading(true);
@@ -73,6 +132,17 @@ export default function Home() {
     setLoading(false);
     setAnalyzed(true);
   };
+
+  if (!hydrated) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <AppHeader />
+        <div className="flex flex-1 items-center justify-center">
+          <div className="mx-auto animate-spin akk-spinner" />
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -155,7 +225,20 @@ export default function Home() {
               </div>
             </div>
             <aside className="hidden w-56 shrink-0 lg:block">
-              <SectionNav footer={<ExportButtons />} />
+              <SectionNav
+                footer={
+                  <div className="space-y-2">
+                    <ExportButtons />
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="w-full rounded-md border border-line px-3 py-1.5 text-xs font-medium text-muted transition hover:border-brand hover:text-brand"
+                    >
+                      Nouvelle proposition
+                    </button>
+                  </div>
+                }
+              />
             </aside>
           </div>
         </FormProvider>
