@@ -1,0 +1,18 @@
+{
+  "client_name": {
+    "type": "string",
+    "description": "Full legal name of the client company (e.g. Safran Aircraft Engines, Safran Aerosystems)."
+  },
+  "client_reference": {
+    "type": "string",
+    "description": "Client document reference number (e.g. 4CDC1202)."
+  },
+  "mission_start_date": {
+    "type": "string",
+    "description": "Start date of the mission in DD/MM/YYYY format."
+  },
+  "mission_end_date": {
+    "type": "string",
+    "description": "End date of the mission in DD/MM/YYYY format."
+  }
+}

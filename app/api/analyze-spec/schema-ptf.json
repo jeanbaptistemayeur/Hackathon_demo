@@ -1,0 +1,217 @@
+{
+  "specifications": {
+    "project_title": {
+      "type": "string",
+      "description": "Title of the project."
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Full legal name of the client company."
+    },
+    "client_rcs": {
+      "type": "string",
+      "description": "Client RCS registration number."
+    },
+    "spec_reference": {
+      "type": "string",
+      "description": "Reference number of the client specification document (Cahier des Charges).",
+      "rule": "Extract the document reference then append '-' followed by the uploaded file name (without extension). Example: '4CDC1202-NomDuFichier'. If the ref is already in the file name, just use the file name without extension."
+    },
+    "offer_reference": {
+      "type": "string",
+      "description": "Akkodis offer reference number (format O-XXXXXX-Y)."
+    },
+    "offer_date": {
+      "type": "string",
+      "description": "Date of the offer in DD/MM/YYYY format. Date of the last update of document."
+    },
+    "mission_start_date": {
+      "type": "string",
+      "description": "Start date of the mission in DD/MM/YYYY format."
+    },
+    "mission_end_date": {
+      "type": "string",
+      "description": "End date of the mission in DD/MM/YYYY format."
+    },
+    "validity_date": {
+      "type": "string",
+      "description": "Proposal validity end date in DD/MM/YYYY format."
+    },
+    "validated_by": {
+      "type": "string",
+      "description": "Full name and function of the person who validated the document."
+    },
+    "akkodis_entity": {
+      "type": "string",
+      "description": "Akkodis legal entity name used for invoicing."
+    },
+    "client_contacts": {
+      "type": "array",
+      "description": "List of client contacts, each with firstName, lastName, function, phone, and email."
+    },
+    "akkodis_contacts": {
+      "type": "array",
+      "description": "List of Akkodis contacts, each with firstName, lastName, function, phone, and email."
+    },
+    "business_segment": {
+      "type": "string",
+      "description": "Selected SAFRAN business segment description (e.g. Calcul éléments finis, Conception mécanique)."
+    },
+    "nf_code": {
+      "type": "string",
+      "description": "NF code associated with the business segment (e.g. NF127, NF124)."
+    },
+    "context_overview": {
+      "type": "string",
+      "description": "Description of the client context, their business sector, and the need addressed by this proposal."
+    },
+    "main_mission": {
+      "type": "string",
+      "description": "Summary of the main mission to be performed."
+    },
+    "location": {
+      "type": "string",
+      "description": "Where the mission will be executed (client site, remote, Akkodis site, or hybrid)."
+    },
+    "location_address": {
+      "type": "array",
+      "description": "List of addresses where the mission will be executed. A profile can work on multiple sites simultaneously.",
+      "rule": "Return an array of strings, one per site address. If only one site, return a single-element array."
+    },
+    "service_window": {
+      "type": "string",
+      "description": "Working hours and days for the mission (e.g. lundi-vendredi 7h30-18h00)."
+    },
+    "logistics_provider": {
+      "type": "string",
+      "description": "Who provides the logistics means: client, Akkodis, or joint."
+    },
+    "ppe_required": {
+      "type": "boolean",
+      "description": "Whether Personal Protective Equipment (EPI) is required."
+    },
+    "ppe_details": {
+      "type": "string",
+      "description": "Description of required PPE if applicable."
+    },
+    "clearance_required": {
+      "type": "boolean",
+      "description": "Whether security clearance (Habilitation) is required."
+    },
+    "clearance_details": {
+      "type": "string",
+      "description": "Description of required clearance if applicable."
+    },
+    "export_control": {
+      "type": "boolean",
+      "description": "Whether Export Control constraints are identified for this mission."
+    },
+    "gdpr_applicable": {
+      "type": "boolean",
+      "description": "Whether the mission involves processing personal data (RGPD)."
+    },
+    "ai_usage": {
+      "type": "string",
+      "description": "Description of AI usage in the project if applicable."
+    },
+    "fte_count": {
+      "type": "number",
+      "description": "Estimated number of full-time equivalents (ETP) for the project."
+    },
+    "carbon_impact": {
+      "type": "string",
+      "description": "Estimated carbon impact of the project in tCO2eq."
+    },
+    "requirements_matrix": {
+      "type": "array",
+      "description": "Compliance matrix: array of objects with chapter_reference, chapter_name, compliance_status (C/PC/NC/NA), and comment."
+    },
+    "risks": {
+      "type": "array",
+      "description": "Identified risks: array of objects with risk_nature, mitigation_plan, and comment. Default value: 'En fonction des éléments précisés dans la présente proposition, aucun risque majeur n'a été identifié par Akkodis dans le cadre de cette prestation.' If risks are identified: 'En fonction des éléments précisés dans la présente proposition, des risques sont identifiés, précisés dans le tableau ci-dessous :'",
+      "rule": "Always default to empty array (no risk). If risks are explicitly mentioned in the document, list them as objects {risk_nature, mitigation_plan, comment}."
+    },
+    "pricing_lots": {
+      "type": "array",
+      "description": "Array of pricing lots, each with lot_name, description, nf_code, daily_rate, production_days, unit_count, lot_price, and contract_type."
+    },
+    "commercial_discount_percent": {
+      "type": "number",
+      "description": "Commercial discount percentage applied to the total."
+    },
+    "total_price_ht": {
+      "type": "number",
+      "description": "Total price excluding tax (HT) in euros after discount."
+    },
+    "total_production_days": {
+      "type": "number",
+      "description": "Total number of production days."
+    },
+    "ancillary_expenses": {
+      "type": "object",
+      "description": "Ancillary expenses object with details, daily_fee, days, and total."
+    },
+    "license_fees": {
+      "type": "object",
+      "description": "License fees object with details, daily_fee, usage_days, and total."
+    },
+    "billing_frequency": {
+      "type": "string",
+      "description": "Billing frequency (e.g. monthly pro rata of days worked)."
+    },
+    "payment_terms": {
+      "type": "string",
+      "description": "Payment terms (e.g. 45 jours fin de mois)."
+    },
+    "order_email": {
+      "type": "string",
+      "description": "Email address for sending purchase orders."
+    },
+    "rate_revision_formula": {
+      "type": "string",
+      "description": "Formula used for annual rate revision (SYNTEC index)."
+    },
+    "client_signatory_name": {
+      "type": "string",
+      "description": "Full name of the client signatory."
+    },
+    "client_signatory_function": {
+      "type": "string",
+      "description": "Function of the client signatory."
+    },
+    "akkodis_signatory_name": {
+      "type": "string",
+      "description": "Full name of the Akkodis signatory."
+    },
+    "akkodis_signatory_function": {
+      "type": "string",
+      "description": "Function of the Akkodis signatory."
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the specification document."
+    }
+  },
+  "profiles": {
+    "proposal_highlights": {
+      "type": "array",
+      "description": "Key strengths of the proposal (experience, expertise, capabilities)."
+    },
+    "client_manager_name": {
+      "type": "string",
+      "description": "Full name of the Akkodis client account manager (chargé d'affaire)."
+    },
+    "team_manager_name": {
+      "type": "string",
+      "description": "Full name of the team/project manager responsible for delivery."
+    },
+    "team_manager_function": {
+      "type": "string",
+      "description": "Function/title of the team manager."
+    },
+    "external_subcontractors": {
+      "type": "array",
+      "description": "List of external subcontractor entities if applicable."
+    }
+  }
+}
